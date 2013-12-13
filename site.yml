@@ -1,0 +1,8 @@
+---
+
+- name: echo kk to /tmp
+  hosts: all
+  user: root
+
+  roles:
+    - snmp

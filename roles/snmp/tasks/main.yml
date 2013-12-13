@@ -1,0 +1,18 @@
+---
+
+- name: install snmp service
+  yum: name={{ item }} state=present
+  with_items:
+    - net-snmp
+    - net-snmp-libs
+    - net-snmp-utils
+
+- name: Configure snmp file
+  template: src=snmpd.conf.j2 dest=/etc/snmp/snmpd.conf
+  notify: restart snmpd
+
+- name: Start the snmp service
+  service: name=snmpd state=started enabled=true
+
+- name: open snmp port
+  firewalld: service=snmpd permanent=true state=enabled
